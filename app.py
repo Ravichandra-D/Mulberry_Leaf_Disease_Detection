@@ -3,8 +3,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
-import keras
-keras.config.enable_unsafe_deserialization()
+
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
