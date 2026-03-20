@@ -111,11 +111,21 @@ st.markdown('<div class="subtitle">📊 AI Powered Mulberry Disease Detection Sy
 
 
 # ---------------- LOAD MODEL ----------------
+#@st.cache_resource
+#def load_model():
+ #   model = tf.keras.models.load_model("mulberry_best_model.h5", compile=False)
+  #  return model
+
+from keras.models import load_model
+
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model("mulberry_best_model.h5", compile=False)
+    model = load_model(
+        "mulberry_best_model.h5",
+        compile=False,
+        safe_mode=False   # ✅ IMPORTANT
+    )
     return model
-
 model = load_model()
 
 classes = ['Fertilizer', 'Healthy', 'LeafSpot', 'Powdery']
