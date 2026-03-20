@@ -120,11 +120,7 @@ from keras.models import load_model as keras_load_model
 
 @st.cache_resource
 def load_my_model():
-    model = keras_load_model(
-        "mulberry_best_model.h5",
-        compile=False,
-        safe_mode=False
-    )
+    model = tf.keras.models.load_model("mulberry_model.keras")
     return model
 
 model = load_my_model()
