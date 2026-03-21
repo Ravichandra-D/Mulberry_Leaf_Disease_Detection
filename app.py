@@ -111,29 +111,17 @@ st.markdown('<div class="subtitle">📊 AI Powered Mulberry Disease Detection Sy
 
 
 # ---------------- LOAD MODEL ----------------
-#@st.cache_resource
-#def load_model():
- #   model = tf.keras.models.load_model("mulberry_best_model.h5", compile=False)
-  #  return model
-
-from keras.models import load_model as keras_load_model
-
-from tensorflow.keras.models import model_from_json
-
 @st.cache_resource
 def load_my_model():
-    # Load architecture
-    with open("model_architecture.json", "r") as json_file:
-        model_json = json_file.read()
-
-    model = model_from_json(model_json)
-
-    # Load weights
-    model.load_weights("model_weights.h5")
-
-    return model
+    try:
+        model = tf.keras.models.load_model("mulberry_saved_model")
+        return model
+    except Exception as e:
+        st.error(f"Model loading failed: {e}")
+        return None
 
 model = load_my_model()
+
 classes = ['Fertilizer', 'Healthy', 'LeafSpot', 'Powdery']
 
 
