@@ -111,17 +111,17 @@ st.markdown('<div class="subtitle">📊 AI Powered Mulberry Disease Detection Sy
 
 
 # ---------------- LOAD MODEL ----------------
+from keras.layers import TFSMLayer
+
 @st.cache_resource
 def load_my_model():
-    try:
-        model = tf.keras.models.load_model("mulberry_saved_model")
-        return model
-    except Exception as e:
-        st.error(f"Model loading failed: {e}")
-        return None
+    model = TFSMLayer(
+        "mulberry_saved_model",
+        call_endpoint="serving_default"
+    )
+    return model
 
 model = load_my_model()
-
 classes = ['Fertilizer', 'Healthy', 'LeafSpot', 'Powdery']
 
 
@@ -144,7 +144,8 @@ if model is not None and uploaded_file is not None:
     img_array = np.array(img)/255.0
     img_array = np.expand_dims(img_array,axis=0)
 
-    prediction = model.predict(img_array)
+    prediction = model(img_array)
+    prediction = prediction.numpy()
 
     predicted_class = classes[np.argmax(prediction)]
     confidence = np.max(prediction)
