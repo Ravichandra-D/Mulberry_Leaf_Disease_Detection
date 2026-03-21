@@ -121,11 +121,14 @@ from keras.models import load_model as keras_load_model
 
 @st.cache_resource
 def load_my_model():
-    model = tf.keras.models.load_model("mulberry_model.keras")
-    return model
+    try:
+        model = tf.keras.models.load_model("mulberry_model.keras")
+        return model
+    except Exception as e:
+        st.error(f"Model loading failed: {e}")
+        return None
 
 model = load_my_model()
-
 classes = ['Fertilizer', 'Healthy', 'LeafSpot', 'Powdery']
 
 
