@@ -3,7 +3,8 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
-
+import os
+os.environ["TF_USE_LEGACY_KERAS"] = "1"
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
