@@ -1,7 +1,5 @@
 streamlit
-tensorflow==2.15.0
-keras
+tensorflow==2.16.2
 numpy
 pillow
 matplotlib
-tf_keras
