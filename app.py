@@ -141,8 +141,8 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 
 # ---------------- PREDICTION ----------------
-if uploaded_file is not None:
-
+#if uploaded_file is not None:
+if model is not None and uploaded_file is not None:
     image = Image.open(uploaded_file).convert("RGB")
 
     st.image(image, caption="🌿 Uploaded Leaf Image", use_container_width=True)
