@@ -128,14 +128,27 @@ classes = ['Fertilizer', 'Healthy', 'LeafSpot', 'Powdery']
 # ---------------- FILE UPLOAD ----------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader("📤 Upload Mulberry Leaf Image", type=["jpg","jpeg","png"])
+option = st.radio("Choose input method:", ["Upload Image", "Use Camera"])
+
+uploaded_file = None
+camera_image = None
+
+if option == "Upload Image":
+    uploaded_file = st.file_uploader("📤 Upload Mulberry Leaf Image", type=["jpg","jpeg","png"])
+
+elif option == "Use Camera":
+    camera_image = st.camera_input("📸 Take a photo")
 
 st.markdown('</div>', unsafe_allow_html=True)
 
 
 # ---------------- PREDICTION ----------------
-if model is not None and uploaded_file is not None:
-    image = Image.open(uploaded_file).convert("RGB")
+if model is not None and (uploaded_file is not None or camera_image is not None):
+
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file).convert("RGB")
+    else:
+        image = Image.open(camera_image).convert("RGB")
 
     st.image(image, caption="🌿 Uploaded Leaf Image", use_container_width=True)
 
@@ -146,19 +159,18 @@ if model is not None and uploaded_file is not None:
     # 🔥 Model prediction
     prediction = model(img_array)
 
-    # 🔥 Handle different output types (VERY IMPORTANT)
+    # 🔥 Handle different output types
     if isinstance(prediction, dict):
         prediction = list(prediction.values())[0]
 
     if hasattr(prediction, "numpy"):
         prediction = prediction.numpy()
 
-    # Ensure it's numpy array
     prediction = np.array(prediction)
 
-    # 🔥 Final output
     predicted_class = classes[np.argmax(prediction)]
     confidence = float(np.max(prediction))
+    st.success("Prediction completed successfully!")
     
     # -------- RESULT CARD --------
     st.markdown(f"""
