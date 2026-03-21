@@ -134,23 +134,32 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 
 # ---------------- PREDICTION ----------------
-#if uploaded_file is not None:
 if model is not None and uploaded_file is not None:
     image = Image.open(uploaded_file).convert("RGB")
 
     st.image(image, caption="🌿 Uploaded Leaf Image", use_container_width=True)
 
-    img = image.resize((224,224))
-    img_array = np.array(img)/255.0
-    img_array = np.expand_dims(img_array,axis=0)
+    img = image.resize((224, 224))
+    img_array = np.array(img) / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
 
+    # 🔥 Model prediction
     prediction = model(img_array)
-    prediction = prediction.numpy()
 
+    # 🔥 Handle different output types (VERY IMPORTANT)
+    if isinstance(prediction, dict):
+        prediction = list(prediction.values())[0]
+
+    if hasattr(prediction, "numpy"):
+        prediction = prediction.numpy()
+
+    # Ensure it's numpy array
+    prediction = np.array(prediction)
+
+    # 🔥 Final output
     predicted_class = classes[np.argmax(prediction)]
-    confidence = np.max(prediction)
-
-
+    confidence = float(np.max(prediction))
+    
     # -------- RESULT CARD --------
     st.markdown(f"""
     <div class="result-box">
