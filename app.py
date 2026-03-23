@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
-    page_title="Mulberry Leaf Disease Detection",
+    page_title="Mulberry Guard AI",
     page_icon="🌿",
     layout="wide"
 )
@@ -72,8 +72,8 @@ AI system that detects diseases in **Mulberry leaves**.
 """)
 
 # ---------------- TITLE ----------------
-st.markdown('<div class="big-title">🌿 Mulberry Leaf Disease Classifier</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">📊 AI Powered Mulberry Disease Detection System</div>', unsafe_allow_html=True)
+st.markdown('<div class="big-title">🌿 Mulberry Guard AI</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">🤖 Smart Mulberry Disease Detection & Treatment Recommendation</div>', unsafe_allow_html=True)
 
 # ---------------- LOAD MODEL ----------------
 from keras.layers import TFSMLayer
